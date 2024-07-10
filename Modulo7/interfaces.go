@@ -30,11 +30,66 @@ func (g Gato) NumeroDePatas() int {
 }
 
 type Animal interface {
-	Barulho()
-	NumeroDePatas()
+	Barulho() string
+	NumeroDePatas() int
+}
+
+func FazBarulho(animal Animal) {
+	fmt.Println(animal.Barulho())
+}
+
+type Pessoa struct {
+	Nome             string
+	Idade            int
+	Prof             string
+	TempoDeprofissao int 
+}
+
+type Crianca struct {
+	Nome  string
+	Idade int
+}
+
+func (c Crianca) FalaBomDia() string {
+	return c.Nome + "deseja bom dia pra você!"
+}
+
+func (p Pessoa) FalaBomDia() string {
+	return fmt.Sprintf("%s deseja bom dia pra você!", p.Nome)
+}
+
+func (p Pessoa) Profissao() string {
+	return fmt.Sprintf("%s tem %d anos como %s", p.Nome, p.TempoDeprofissao, p.Prof)
+}
+
+type Adulto interface {
+	FalaBomDia() string
+	Profissao() string
+}
+
+func BomDia(adulto Adulto) string {
+	return adulto.FalaBomDia()
 }
 
 func main() {
+
+	adulto := Pessoa {
+		Nome: "Maria",
+		Idade: 28,
+		Prof: "dev",
+		TempoDeprofissao: 6,
+	}
+
+
+	crianca := Crianca {
+		Nome: "João",
+		Idade: 4,
+	}
+
+	crianca.FalaBomDia()
+	adulto.FalaBomDia()
+	BomDia(adulto)
+	
 	cachorro := Cachorro{
 		Raca:  "spitz alemão",
 		Cor:   "preta",
@@ -46,7 +101,6 @@ func main() {
 		Patas: 4,
 	}
 
-	fmt.Println(cachorro.Barulho())
-	fmt.Println(cachorro.Barulho())
-	fmt.Println(gato.Barulho())
+	FazBarulho(gato)
+	FazBarulho(cachorro)
 }
